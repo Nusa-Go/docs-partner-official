@@ -1,0 +1,90 @@
+@import 'tailwindcss';
+
+:root {
+  /* OKLCH Merah NusaGo - Dibuat sedikit lebih vibrant untuk premium feel */
+  --primary: oklch(0.55 0.22 25.5);           
+  --primary-hover: oklch(0.48 0.20 25.5);    
+  --nusago-dark: oklch(0.14 0.02 25.5);      
+  
+  --background: oklch(0.99 0.002 250);     /* Off-white lebih bersih */
+  --foreground: oklch(0.20 0.02 250);     
+  --border: oklch(0.94 0.005 250);         
+  
+  --radius-5xl: 3.5rem; 
+}
+
+@theme inline {
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-nusago-dark: var(--nusago-dark);
+  --color-border: var(--border);
+  
+  --radius-5xl: var(--radius-5xl);
+
+  /* Animasi Mockup: Dibuat lebih smooth & subtle */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(4deg); }
+    50% { transform: translateY(-15px) rotate(6deg); }
+  }
+  --animate-float-phone: float 8s ease-in-out infinite;
+
+  /* Tambahkan Tracking Negatif untuk Judul (Editorial Style) */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.02em;
+}
+
+@layer base {
+  * {
+    @apply border-border/50 outline-none;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    /* Mastiin font Plus Jakarta Sans kepasang sempurna */
+    @apply bg-background text-foreground antialiased font-sans tracking-tight;
+  }
+  h1, h2, h3 {
+    /* Judul harus rapat biar elegan */
+    @apply tracking-[-0.04em] leading-[1.1];
+  }
+  ::selection {
+    @apply bg-primary/10 text-primary;
+  }
+}
+
+@layer components {
+  /* Pencarian: Ultra-Glass Effect */
+  .search-glass {
+    @apply bg-white/10 backdrop-blur-2xl border border-white/20 
+           transition-all duration-500 shadow-2xl;
+  }
+  
+  .search-glass:focus-within {
+    @apply bg-white border-white shadow-white/10;
+  }
+
+  /* Kartu Kategori: Lebih Soft Shadows */
+  .card-premium {
+    @apply bg-white rounded-[2.5rem] p-10 border border-slate-100 
+           shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 
+           hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:-translate-y-2;
+  }
+
+  .btn-nusago {
+    @apply px-10 py-4 bg-primary text-white rounded-2xl font-bold 
+           hover:bg-primary-hover active:scale-95 transition-all 
+           cursor-pointer inline-flex items-center justify-center 
+           text-[13px] tracking-widest uppercase shadow-lg shadow-primary/20;
+  }
+
+  /* Frame HP Mockup */
+  .phone-frame {
+    @apply bg-[#0A0F1C] border-[6px] border-slate-800 rounded-[3rem] 
+           shadow-2xl overflow-hidden;
+  }
+}
