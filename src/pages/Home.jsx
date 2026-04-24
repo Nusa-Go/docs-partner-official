@@ -194,10 +194,10 @@ const Home = () => {
                 desc: "Akses dashboard utama dan mulai operasikan bisnis anda secara mandiri." 
               }
             ].map((item, idx) => (
-              <div key={idx} className="bg-white p-4 rounded-[3rem] shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-slate-50 group hover:-translate-y-2 transition-all duration-500">
+              <div key={idx} className="bg-white p-4 rounded-[1rem] shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-slate-50 group hover:-translate-y-2 transition-all duration-500">
                 
                 {/* Image Container: Rounded as per reference */}
-                <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-8 relative">
+                <div className="aspect-[4/5] rounded-[1rem] overflow-hidden mb-8 relative">
                   <img 
                     src={item.img} 
                     alt={item.title} 
@@ -489,8 +489,8 @@ const Home = () => {
 </section>
 
       {/* --- 6. FOOTER (ULTRA SLIM & DEEP BLACK) --- */}
-<footer className="px-6 md:px-10 pb-12 font-roboto">
-  <div className="bg-[#0A0F1C] rounded-[3rem] py-16 md:py-20 text-center text-white relative overflow-hidden shadow-2xl">
+<footer className="px-6 md:px-50 pb-12 font-roboto">
+  <div className="bg-[#0A0F1C] rounded-[2rem] py-10 md:py-15 text-center text-white relative overflow-hidden shadow-2xl">
     
     {/* Subtle Ambient Glow */}
     <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">

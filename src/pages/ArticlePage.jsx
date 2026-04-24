@@ -9,7 +9,7 @@ import {
   X, 
   ArrowLeft,
   Heart,
-  FileDown // Ikon untuk download
+  FileDown 
 } from "lucide-react";
 
 // --- 1. DATABASE KONTEN DOKUMENTASI ---
@@ -26,7 +26,7 @@ const docDatabase = {
     ],
     video: true,
     youtubeId: "rKA9LVQ5wSk",
-    pdfLink: "/files/panduan-register.pdf" // Tambahkan link PDF di sini
+    pdfLink: "/files/panduan-register.pdf"
   },
   "login": {
     category: "Autentikasi",
@@ -97,7 +97,7 @@ const docDatabase = {
     ],
     video: true,
     youtubeId: "QN2Zxm95Eew",
-    pdfLink: "/files/panduan-daftar-kost.pdf"
+    pdfLink: "https://drive.google.com/file/d/1jwtK-V8GTUQ-lYKLtPeoCOp59WeT0lkT/view?usp=drivesdk"
   },
   "daftar-villa": {
     category: "Form application",
@@ -112,7 +112,7 @@ const docDatabase = {
     ],
     video: true,
     youtubeId: "dbUVz-xdlrk",
-    pdfLink: "/files/panduan-daftar-villa.pdf"
+    pdfLink: "https://drive.google.com/file/d/1pjkqltdK20nk2uL09Nf0MVvsUatQzHho/view?usp=drivesdk"
   },
   "daftar-homestay": {
     category: "Form application",
@@ -127,7 +127,7 @@ const docDatabase = {
     ],
     video: true,
     youtubeId: "cynJy6Oj4YA",
-    pdfLink: "/files/panduan-daftar-homestay.pdf"
+    pdfLink: "https://drive.google.com/file/d/1lhlTxXIaKvwIDnc8OzmP6WRJCzomVR3U/view?usp=drivesdk"
   },
   "tambah-rental": {
     category: "Form application",
@@ -142,7 +142,7 @@ const docDatabase = {
     ],
     video: true,
     youtubeId: "1gEKMG8fE1s",
-    pdfLink: "/files/panduan-tambah-rental.pdf"
+    pdfLink: "https://drive.google.com/file/d/1vVaSWNJeBe5pCTUAjrw6_lue4DW6zG_6/view?usp=drivesdk"
   }
 };
 
@@ -150,7 +150,6 @@ const docDatabase = {
 const categories = [
   { 
     name: "Autentikasi", 
-    colorClass: "text-slate-900",
     items: [
       { label: "Register akun", slug: "register-akun" },
       { label: "Login", slug: "login" },
@@ -160,8 +159,6 @@ const categories = [
   },
   { 
     name: "Form application", 
-    colorClass: "text-slate-900",
-    isSpecial: true,
     items: [
       { label: "Daftar hotel", slug: "daftar-hotel" },
       { label: "Daftar kost", slug: "daftar-kost" },
@@ -177,13 +174,15 @@ const ArticlePage = () => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   
-  const currentContent = docDatabase[id] || docDatabase["daftar-hotel"];
+  const currentContent = docDatabase[id] || docDatabase["register-akun"];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     setIsMobileMenuOpen(false);
     setFeedbackSubmitted(false);
+    setIsPlaying(false);
   }, [id]);
 
   const handleFeedback = () => {
@@ -211,32 +210,23 @@ const ArticlePage = () => {
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-20 flex flex-col md:flex-row gap-12">
         
-        {/* --- SIDEBAR: MODERN & RESPONSIVE --- */}
+        {/* --- SIDEBAR --- */}
         <aside className={`
           fixed md:sticky top-0 md:top-28 left-0 z-[75] h-screen md:h-[calc(100vh-140px)] w-full md:w-64 
           transition-all duration-500 ease-in-out
-          ${isMobileMenuOpen 
-            ? 'translate-x-0 opacity-100' 
-            : '-translate-x-full md:translate-x-0'
-          }
+          ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-full md:translate-x-0'}
         `}>
-          {/* Mobile Background Blur Overlay */}
           <div className="absolute inset-0 bg-white/80 backdrop-blur-2xl md:bg-transparent -z-10" />
 
           <div className="h-full flex flex-col p-8 md:p-0 overflow-y-auto custom-scrollbar">
-            
-            {/* Mobile Header: Logo inside Sidebar */}
             <div className="md:hidden flex items-center justify-between mb-12">
                <div className="flex flex-col">
-                  <h2 className="text-xl font-black text-slate-900 tracking-tighter font-roboto">
+                  <h2 className="text-xl font-black text-slate-900 tracking-tighter">
                     NusaGo <span className="text-primary">Partner</span>
                   </h2>
                   <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Documentation</span>
                </div>
-               <button 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500"
-               >
+               <button onClick={() => setIsMobileMenuOpen(false)} className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500">
                  <X size={20} />
                </button>
             </div>
@@ -244,8 +234,7 @@ const ArticlePage = () => {
             <nav className="space-y-10">
               {categories.map((cat) => (
                 <div key={cat.name} className="space-y-4">
-                  {/* Category Label: Smaller, cleaner, bold */}
-                  <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-300 px-4">
+                  <h4 className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-900 px-4">
                     {cat.name}
                   </h4>
                   
@@ -261,24 +250,13 @@ const ArticlePage = () => {
                           }}
                           className={`
                             group relative flex items-center gap-3 px-4 py-3 text-[13px] font-bold rounded-xl transition-all duration-300
-                            ${isActive 
-                              ? 'bg-primary/5 text-primary' 
-                              : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-                            }
+                            ${isActive ? 'bg-primary/5 text-primary' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}
                           `}
                         >
-                          {/* Active Indicator Dot */}
-                          {isActive && (
-                            <div className="absolute left-0 w-1 h-5 bg-primary rounded-r-full" />
-                          )}
-                          
+                          {isActive && <div className="absolute left-0 w-1 h-5 bg-primary rounded-r-full" />}
                           <span className={`transition-transform duration-300 ${isActive ? 'translate-x-1' : 'group-hover:translate-x-1'}`}>
                             {item.label}
                           </span>
-
-                          {isActive && (
-                            <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                          )}
                         </button>
                       );
                     })}
@@ -286,18 +264,6 @@ const ArticlePage = () => {
                 </div>
               ))}
             </nav>
-
-            {/* Bottom Sidebar Info (Optional) */}
-            <div className="mt-auto pt-10 md:hidden">
-              <div className="p-5 rounded-2xl bg-primary/5 border border-primary/10">
-                <p className="text-[11px] font-bold text-primary leading-relaxed">
-                  Butuh bantuan teknis lebih lanjut?
-                </p>
-                <a href="#" className="text-[10px] font-black uppercase tracking-widest text-slate-900 mt-2 inline-block hover:underline">
-                  Hubungi Support
-                </a>
-              </div>
-            </div>
           </div>
         </aside>
 
@@ -309,7 +275,7 @@ const ArticlePage = () => {
             <nav className="text-[13px] font-bold text-slate-300 mb-12 flex items-center gap-3">
                <Link to="/" className="hover:text-primary transition-colors">Bantuan</Link>
                <ChevronRight size={14} className="opacity-30" /> 
-               <span className="opacity-60">{currentContent.category}</span>
+               <span className="text-slate-900 font-black">{currentContent.category}</span>
                <ChevronRight size={14} className="opacity-30" /> 
                <span className="text-primary tracking-tight">{currentContent.breadcrumb}</span>
             </nav>
@@ -320,10 +286,10 @@ const ArticlePage = () => {
               </h1>
             </header>
             
-            {/* Content Steps */}
+            {/* Steps */}
             <div className="space-y-5">
               {currentContent.steps.map((step, index) => (
-                <div key={index} className="flex gap-6 p-8 rounded-[2.5rem] bg-[#FBFBFC] border border-transparent hover:border-slate-100 hover:bg-white hover:shadow-xl transition-all duration-500 group">
+                <div key={index} className="flex gap-6 p-8 rounded-[1rem] bg-[#FBFBFC] border border-transparent hover:border-slate-100 hover:bg-white hover:shadow-xl transition-all duration-500 group">
                   <div className="w-11 h-11 rounded-2xl bg-white shadow-sm text-slate-400 flex items-center justify-center text-sm font-black shrink-0 group-hover:bg-primary group-hover:text-white group-hover:rotate-6 transition-all duration-500">
                     {index + 1}
                   </div>
@@ -334,67 +300,86 @@ const ArticlePage = () => {
               ))}
             </div>
 
-            {/* Video Tutorial Section with Auto-Thumbnail */}
+            {/* Video Tutorial Section */}
             {currentContent.video && currentContent.youtubeId && (
               <div className="mt-20">
-                <div className="flex items-center gap-3 mb-8">
-                   <div className="w-2 h-6 bg-primary rounded-full" />
-                   <h3 className="text-xl font-black text-slate-900 tracking-tight">Tutorial Visual</h3>
-                </div>
-                <div className="relative aspect-video w-full bg-slate-900 rounded-[3rem] overflow-hidden group cursor-pointer shadow-2xl">
-                   {/* Thumbnail Otomatis dari Youtube */}
-                   <img 
-                      src={`https://img.youtube.com/vi/${currentContent.youtubeId}/maxresdefault.jpg`} 
-                      alt="Thumbnail" 
-                      className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-700 grayscale-[0.5] group-hover:grayscale-0"
-                   />
-                   
-                   {/* Overlay & Play Button */}
-                   <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-all duration-700" />
-                   <div className="relative z-10 h-full w-full flex flex-col items-center justify-center">
-                      <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all duration-500">
-                         <PlayCircle size={40} className="text-white" />
-                      </div>
-                      <p className="text-white/80 text-[10px] font-black uppercase tracking-[0.3em] mt-6 group-hover:text-white transition-colors">Putar Video Panduan</p>
-                   </div>
-
-                   {/* Link Aktif ke YouTube */}
-                   <a 
-                      href={`https://www.youtube.com/watch?v=${currentContent.youtubeId}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute inset-0 z-[20]"
-                   />
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-6 bg-primary rounded-full" />
+                    <h3 className="text-xl font-black text-slate-900 tracking-tight">Tutorial Visual</h3>
+                  </div>
+                  
+                  {/* UPDATE: Buka di YouTube (Title Case) */}
+                  <a 
+                    href={`https://www.youtube.com/watch?v=${currentContent.youtubeId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[11px] font-bold text-slate-400 hover:text-primary transition-colors flex items-center gap-1.5"
+                  >
+                    Buka di YouTube <ChevronRight size={14} />
+                  </a>
                 </div>
 
-                {/* --- TOMBOL DOWNLOAD PANDUAN PDF --- */}
-                {currentContent.pdfLink && (
-                  <div className="mt-8 flex justify-center">
-                    <a 
-                      href={currentContent.pdfLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative flex items-center gap-4 px-10 py-5 bg-slate-900 text-white rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-500 hover:bg-primary hover:shadow-primary/30 active:scale-95"
-                    >
-                      {/* Effect background hover */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                      
-                      <div className="relative z-10 w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-all duration-500">
-                        <FileDown size={22} className="group-hover:bounce" />
-                      </div>
-                      
-                      <div className="relative z-10 text-left">
-                        <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40 group-hover:text-white/60 mb-0.5">Offline Access</p>
-                        <span className="text-[12px] font-black tracking-tight uppercase">Download Modul</span>
-                      </div>
+                <div className="relative aspect-video w-full bg-slate-900 overflow-hidden shadow-2xl group">
+                   {!isPlaying ? (
+                     <div className="absolute inset-0 w-full h-full cursor-pointer" onClick={() => setIsPlaying(true)}>
+                        <img 
+                          src={`https://img.youtube.com/vi/${currentContent.youtubeId}/maxresdefault.jpg`} 
+                          alt="Thumbnail" 
+                          className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-700 grayscale-[0.5] group-hover:grayscale-0"
+                        />
+                        <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-all duration-700" />
+                        <div className="relative z-10 h-full w-full flex flex-col items-center justify-center">
+                           <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all duration-500">
+                              <PlayCircle size={40} className="text-white" />
+                           </div>
+                           <p className="text-white/80 text-[10px] font-black uppercase tracking-[0.3em] mt-6">Klik untuk Putar di Sini</p>
+                        </div>
+                     </div>
+                   ) : (
+                     <iframe
+                        className="w-full h-full border-0"
+                        src={`https://www.youtube.com/embed/${currentContent.youtubeId}?autoplay=1&rel=0`}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                     ></iframe>
+                   )}
+                </div>
+
+              {/* --- TOMBOL DOWNLOAD PANDUAN PDF --- */}
+              {currentContent.pdfLink && (
+                <div className="mt-8 flex justify-center">
+                  <a 
+                    href={currentContent.pdfLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex items-center gap-4 px-6 py-3 bg-slate-900 text-white rounded-[1rem] overflow-hidden shadow-2xl transition-all duration-500 hover:bg-primary hover:shadow-primary/30 active:scale-95"
+                  >
+                    {/* Effect background hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                    
+                    <div className="relative z-10 w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-all duration-500">
+                      <FileDown size={22} />
+                    </div>
+                    
+                    <di className="relative z-10 text-left">
+                      {/* Teks di bawah sudah tidak kapital (Normal Case) */}
+                      <p className="text-[10px] font-bold text-white/40 group-hover:text-white/60 mb-0.5 transition-colors">
+                        Offline Access
+                      </p>
+                      <span className="text-[14px] font-black tracking-tight block">
+                        Download Modul
+                      </span>
+                    </di>
                     </a>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Feedback Section */}
-            <div className="mt-24 pt-12 border-t border-slate-50 flex flex-col items-center gap-8 text-center min-h-[200px] justify-center transition-all duration-500">
+            {/* Feedback */}
+            <div className="mt-24 pt-12 border-t border-slate-50 flex flex-col items-center gap-8 text-center min-h-[200px] justify-center">
               {!feedbackSubmitted ? (
                 <>
                   <div>
@@ -402,15 +387,10 @@ const ArticlePage = () => {
                     <h4 className="text-lg font-bold text-slate-800">Apakah panduan ini membantu Anda?</h4>
                   </div>
                   <div className="flex gap-4">
-                    <button 
-                      onClick={handleFeedback}
-                      className="flex items-center gap-3 px-10 py-4 rounded-2xl border border-slate-100 text-[14px] font-black text-slate-500 hover:bg-primary hover:text-white hover:border-primary hover:shadow-xl hover:shadow-primary/20 transition-all duration-500 active:scale-95"
-                    >
+                    <button onClick={handleFeedback} className="flex items-center gap-3 px-10 py-4 rounded-2xl border border-slate-100 text-[14px] font-black text-slate-500 hover:bg-primary hover:text-white hover:border-primary hover:shadow-xl transition-all duration-500 active:scale-95">
                       <ThumbsUp size={18} /> Ya
                     </button>
-                    <button 
-                      className="flex items-center gap-3 px-10 py-4 rounded-2xl border border-slate-100 text-[14px] font-black text-slate-500 hover:bg-slate-50 transition-all duration-500"
-                    >
+                    <button className="flex items-center gap-3 px-10 py-4 rounded-2xl border border-slate-100 text-[14px] font-black text-slate-500 hover:bg-slate-50 transition-all duration-500">
                       <ThumbsDown size={18} /> Tidak
                     </button>
                   </div>
@@ -421,12 +401,11 @@ const ArticlePage = () => {
                     <Heart size={32} fill="currentColor" className="animate-pulse" />
                   </div>
                   <h4 className="text-xl font-black text-slate-900 mb-2">Terima kasih atas masukan Anda! 😊</h4>
-                  <p className="text-sm font-bold text-slate-400">Kami akan terus meningkatkan kualitas layanan untuk Anda.</p>
+                  <p className="text-sm font-bold text-slate-400">Kami akan terus meningkatkan kualitas layanan.</p>
                 </div>
               )}
             </div>
 
-            {/* Bottom Navigation Back */}
             <div className="mt-16 flex justify-center">
                <Link to="/" className="inline-flex items-center gap-3 px-6 py-3 text-slate-400 hover:text-primary font-bold text-sm transition-all group">
                   <ArrowLeft size={18} className="group-hover:-translate-x-2 transition-transform" />

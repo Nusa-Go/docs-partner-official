@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, X, ArrowRight } from 'lucide-react';
+import { Search, X, ArrowRight, LayoutGrid } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,28 +23,29 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 font-roboto">
-      <div className="max-w-7xl mx-auto px-6 h-14 md:h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-4">
         
+        {/* LOGO SECTION */}
         <Link to="/" className="flex items-center gap-3 group shrink-0">
-          <div className="w-8 h-8 md:w-9 md:h-9 overflow-hidden rounded-lg transition-transform duration-300 group-hover:rotate-6">
+          <div className="w-9 h-9 overflow-hidden rounded-xl transition-transform duration-300 group-hover:rotate-6 bg-slate-100">
             <img 
               src="/nus.png" 
               alt="Logo" 
               className="w-full h-full object-cover" 
             />
           </div>
-          <div className="flex flex-col hidden sm:flex">
-            <span className="font-bold text-base md:text-lg leading-none text-slate-900 tracking-tight">
+          <div className="flex flex-col">
+            <span className="block font-bold text-[15px] md:text-lg leading-tight text-slate-900 tracking-tight">
               NusaGo <span className="text-primary">Partner</span>
             </span>
-            <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-0.5">
+            <span className="block text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-0.5">
               Docs & Help Center
             </span>
           </div>
         </Link>
 
+        {/* DESKTOP SEARCH & CTA */}
         <div className="hidden md:flex items-center gap-4 flex-1 justify-end">
-          
           <div className="relative group w-full max-w-[240px]">
             <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
               <Search size={14} />
@@ -58,7 +59,7 @@ const Navbar = () => {
             />
             
             {searchQuery && (
-              <div className="absolute top-full right-0 w-64 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2">
+              <div className="absolute top-full right-0 w-64 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden">
                 {filteredResults.length > 0 ? (
                   filteredResults.slice(0, 5).map((item) => (
                     <button 
@@ -90,31 +91,47 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <div className="flex md:hidden items-center gap-2">
-            <button className="p-2 text-slate-400"><Search size={18}/></button>
+        {/* MOBILE ACTIONS */}
+        <div className="flex md:hidden items-center gap-1">
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 bg-slate-50 rounded-lg text-slate-600 active:scale-90"
+              className={`p-2.5 rounded-xl transition-all ${isOpen ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600'}`}
             >
-              {isOpen ? <X size={20} /> : <div className="space-y-1"><div className="w-4 h-0.5 bg-current"></div><div className="w-3 h-0.5 bg-current ml-auto"></div></div>}
+              {isOpen ? <X size={20} /> : <LayoutGrid size={20} />}
             </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      <div className={`md:hidden transition-all duration-500 bg-white border-b border-slate-100 overflow-hidden ${isOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="px-8 py-8 flex flex-col gap-6">
+      {/* MOBILE MENU DROPDOWN */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[400px] border-b border-slate-100' : 'max-h-0'}`}>
+        <div className="p-4 bg-slate-50/50 flex flex-col gap-4">
+          {/* Mobile Search */}
           <div className="relative">
              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-             <input type="text" placeholder="Cari..." className="w-full bg-slate-50 py-3 pl-12 pr-4 rounded-xl text-sm font-bold outline-none" />
+             <input 
+              type="text" 
+              placeholder="Cari sesuatu..." 
+              className="w-full bg-white border border-slate-200 py-3 pl-12 pr-4 rounded-xl text-[13px] font-bold outline-none focus:border-primary/50 transition-all" 
+             />
           </div>
-          <a 
-            href="https://partner.nusago.id" 
-            className="w-full text-center py-4 bg-primary text-white rounded-xl shadow-lg shadow-primary/20 font-bold text-[13px]"
-          >
-            Buka Dashboard
-          </a>
+
+          {/* Quick Links / Mobile CTA */}
+          <div className="grid grid-cols-1 gap-2">
+            <a 
+              href="https://partner.nusago.id" 
+              className="flex items-center justify-center gap-2 py-4 bg-primary text-white rounded-xl shadow-lg shadow-primary/20 font-bold text-[13px] active:scale-[0.98] transition-transform"
+            >
+              Buka Dashboard Partner
+              <ArrowRight size={16} />
+            </a>
+            <Link 
+              to="/docs"
+              onClick={() => setIsOpen(false)}
+              className="text-center py-3 text-slate-500 font-bold text-[12px] hover:text-primary transition-colors"
+            >
+              Lihat Semua Dokumentasi
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
