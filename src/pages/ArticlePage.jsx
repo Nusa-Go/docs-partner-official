@@ -25,9 +25,10 @@ const docDatabase = {
       "Tunggu proses kurasi akun oleh tim kami maksimal 1x24 jam."
     ],
     video: true,
-    youtubeId: "rKA9LVQ5wSk",
-    pdfLink: "/files/panduan-register.pdf"
+    youtubeId: "MDNfWM3qnQo", 
+    pdfLink: "https://drive.google.com/file/d/1HuJnrSjA6AKfXDuZdBT9DvjaoGnX2UIp/view?usp=drivesdk"
   },
+  
   "login": {
     category: "Autentikasi",
     breadcrumb: "Akses",
@@ -67,7 +68,7 @@ const docDatabase = {
     ],
     video: true,
     youtubeId: "rKA9LVQ5wSk",
-    pdfLink: "/files/panduan-ganti-password.pdf"
+    pdfLink: "https://drive.google.com/file/d/1TokEB1hWpwkEaxjWXAmDwT-f7sZ9Qv9d/view?usp=drivesdk"
   },
   "daftar-hotel": {
     category: "Form application",
