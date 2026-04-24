@@ -510,7 +510,7 @@ const Home = () => {
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
         {/* Tombol Utama: Primary Red */}
-          <a href="nusagoofficial@gmail.com" className="w-full md:w-auto">
+          <a href="mailto: nusagoofficial@gmail.com" className="w-full md:w-auto">
             <button className="w-full md:w-auto bg-primary hover:bg-white hover:text-primary text-white px-10 py-4 rounded-2xl text-[13px] font-black shadow-lg shadow-primary/20 transition-all active:scale-95 flex items-center justify-center gap-3 group cursor-pointer">
               Hubungi support <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </button>
