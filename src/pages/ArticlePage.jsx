@@ -12,7 +12,7 @@ import {
   FileDown 
 } from "lucide-react";
 
-// --- 1. DATABASE KONTEN DOKUMENTASI ---
+// --- 1. DATABASE KONTEN DOKUMENTASI (Sama seperti asli) ---
 const docDatabase = {
   "register-akun": {
     category: "Autentikasi",
@@ -28,7 +28,6 @@ const docDatabase = {
     youtubeId: "MDNfWM3qnQo", 
     pdfLink: "https://drive.google.com/file/d/1HuJnrSjA6AKfXDuZdBT9DvjaoGnX2UIp/view?usp=drivesdk"
   },
-  
   "login": {
     category: "Autentikasi",
     breadcrumb: "Akses",
@@ -147,7 +146,7 @@ const docDatabase = {
   }
 };
 
-// --- 2. STRUKTUR SIDEBAR ---
+// --- 2. STRUKTUR SIDEBAR (Sama seperti asli) ---
 const categories = [
   { 
     name: "Autentikasi", 
@@ -181,51 +180,70 @@ const ArticlePage = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    setIsMobileMenuOpen(false);
     setFeedbackSubmitted(false);
     setIsPlaying(false);
+    // Mobile menu ditutup otomatis saat route berubah
+    setIsMobileMenuOpen(false); 
   }, [id]);
+
+  // Mengunci scroll body saat menu mobile terbuka
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
 
   const handleFeedback = () => {
     setFeedbackSubmitted(true);
   };
 
   return (
-    <div className="bg-[#F9FAFB] min-h-screen text-[#374151] selection:bg-primary/10 selection:text-primary font-roboto">
+    <div className="bg-[#F9FAFB] min-h-screen text-[#374151] selection:bg-primary/10 selection:text-primary font-roboto overflow-x-hidden relative">
       
-      {/* --- FLOATING MOBILE TOGGLE --- */}
-      <button 
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="md:hidden fixed bottom-8 right-6 z-[80] w-14 h-14 bg-slate-900 text-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex items-center justify-center active:scale-95 transition-all duration-300"
-      >
-        {isMobileMenuOpen ? <X size={24}/> : <Menu size={24}/>}
-      </button>
+      {/* --- MOBILE HEADER & TOGGLE (NEW & PROFESSIONAL) --- */}
+      <header className="md:hidden sticky top-0 z-[100] bg-white/95 backdrop-blur-lg border-b border-gray-100 shadow-sm px-6 py-4 flex items-center justify-between">
+         <div className="flex flex-col">
+            <h2 className="text-lg font-black text-slate-900 tracking-tighter">
+              NusaGo <span className="text-primary">Partner</span>
+            </h2>
+            <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Documentation</span>
+         </div>
+         <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-12 h-12 bg-slate-900 text-white rounded-2xl shadow-xl flex items-center justify-center active:scale-95 transition-all duration-300"
+          >
+            {isMobileMenuOpen ? <X size={22}/> : <Menu size={22}/>}
+          </button>
+      </header>
 
-      {/* --- OVERLAY MOBILE --- */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[70] md:hidden"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
+      {/* --- OVERLAY MOBILE (CLEANER) --- */}
+      <div 
+        className={`fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[110] md:hidden transition-opacity duration-500 ease-in-out ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-20 flex flex-col md:flex-row gap-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 flex flex-col md:flex-row gap-12 relative">
         
-        {/* --- SIDEBAR --- */}
+        {/* --- SIDEBAR (FIXED MOBILE off-canvas & PROFESSIONAL DESKTOP sticky) --- */}
         <aside className={`
-          fixed md:sticky top-0 md:top-28 left-0 z-[75] h-screen md:h-[calc(100vh-140px)] w-full md:w-64 
-          transition-all duration-500 ease-in-out
-          ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-full md:translate-x-0'}
+          fixed md:sticky top-0 md:top-28 left-0 z-[120] md:z-10 
+          h-screen md:h-[calc(100vh-140px)] w-[85%] sm:w-[70%] md:w-64 
+          bg-white md:bg-transparent
+          transition-transform duration-500 ease-in-out border-r md:border-r-0 border-gray-100 md:border-none
+          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}>
-          <div className="absolute inset-0 bg-white/80 backdrop-blur-2xl md:bg-transparent -z-10" />
-
-          <div className="h-full flex flex-col p-8 md:p-0 overflow-y-auto custom-scrollbar">
-            <div className="md:hidden flex items-center justify-between mb-12">
+          <div className="h-full flex flex-col p-8 md:p-0 overflow-y-auto custom-scrollbar relative z-10">
+            {/* Mobile Sidebar Header */}
+            <div className="md:hidden flex items-center justify-between mb-12 border-b border-gray-100 pb-6">
                <div className="flex flex-col">
                   <h2 className="text-xl font-black text-slate-900 tracking-tighter">
-                    NusaGo <span className="text-primary">Partner</span>
+                    Pusat <span className="text-primary">Bantuan</span>
                   </h2>
-                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Documentation</span>
                </div>
                <button onClick={() => setIsMobileMenuOpen(false)} className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500">
                  <X size={20} />
@@ -247,7 +265,7 @@ const ArticlePage = () => {
                           key={item.slug} 
                           onClick={() => {
                             navigate(`/docs/${item.slug}`);
-                            setIsMobileMenuOpen(false);
+                            // Logic untuk menutup menu mobile
                           }}
                           className={`
                             group relative flex items-center gap-3 px-4 py-3 text-[13px] font-bold rounded-xl transition-all duration-300
@@ -268,33 +286,33 @@ const ArticlePage = () => {
           </div>
         </aside>
 
-        {/* --- MAIN CONTENT AREA --- */}
-        <main className="flex-1 relative">
-          <article className="bg-white border border-gray-100/50 rounded-[3rem] p-8 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+        {/* --- MAIN CONTENT AREA (PROFESSIONAL & CLEAN) --- */}
+        <main className="flex-1 relative z-0 mt-6 md:mt-0">
+          <article className="bg-white border border-gray-100/50 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-10 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
             
             {/* Breadcrumbs */}
-            <nav className="text-[13px] font-bold text-slate-300 mb-12 flex items-center gap-3">
-               <Link to="/" className="hover:text-primary transition-colors">Bantuan</Link>
-               <ChevronRight size={14} className="opacity-30" /> 
-               <span className="text-slate-900 font-black">{currentContent.category}</span>
-               <ChevronRight size={14} className="opacity-30" /> 
-               <span className="text-primary tracking-tight">{currentContent.breadcrumb}</span>
+            <nav className="text-[12px] md:text-[13px] font-bold text-slate-300 mb-10 md:mb-12 flex items-center gap-2 md:gap-3 overflow-x-auto pb-2 custom-scrollbar-h">
+               <Link to="/" className="hover:text-primary transition-colors shrink-0">Bantuan</Link>
+               <ChevronRight size={14} className="opacity-30 shrink-0" /> 
+               <span className="text-slate-900 font-black shrink-0">{currentContent.category}</span>
+               <ChevronRight size={14} className="opacity-30 shrink-0" /> 
+               <span className="text-primary tracking-tight shrink-0">{currentContent.breadcrumb}</span>
             </nav>
 
-            <header className="mb-14">
-              <h1 className="text-3xl md:text-[44px] font-black text-slate-900 leading-[1.1] tracking-tighter">
+            <header className="mb-12 md:mb-14">
+              <h1 className="text-2xl md:text-[44px] font-black text-slate-900 leading-[1.1] tracking-tighter">
                 {currentContent.title}
               </h1>
             </header>
             
             {/* Steps */}
-            <div className="space-y-5">
+            <div className="space-y-4 md:space-y-5">
               {currentContent.steps.map((step, index) => (
-                <div key={index} className="flex gap-6 p-8 rounded-[1rem] bg-[#FBFBFC] border border-transparent hover:border-slate-100 hover:bg-white hover:shadow-xl transition-all duration-500 group">
-                  <div className="w-11 h-11 rounded-2xl bg-white shadow-sm text-slate-400 flex items-center justify-center text-sm font-black shrink-0 group-hover:bg-primary group-hover:text-white group-hover:rotate-6 transition-all duration-500">
+                <div key={index} className="flex flex-col sm:flex-row gap-4 md:gap-6 p-6 md:p-8 rounded-[1rem] md:rounded-[1.5rem] bg-[#FBFBFC] border border-transparent hover:border-slate-100 hover:bg-white hover:shadow-xl transition-all duration-500 group">
+                  <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl md:rounded-2xl bg-white shadow-sm text-slate-400 flex items-center justify-center text-sm md:text-base font-black shrink-0 group-hover:bg-primary group-hover:text-white group-hover:rotate-6 transition-all duration-500">
                     {index + 1}
                   </div>
-                  <p className="text-[15px] md:text-[16px] leading-relaxed text-slate-600 font-semibold pt-2">
+                  <p className="text-[14px] md:text-[16px] leading-relaxed text-slate-600 font-semibold pt-1">
                     {step}
                   </p>
                 </div>
@@ -303,14 +321,13 @@ const ArticlePage = () => {
 
             {/* Video Tutorial Section */}
             {currentContent.video && currentContent.youtubeId && (
-              <div className="mt-20">
-                <div className="flex items-center justify-between mb-8">
+              <div className="mt-16 md:mt-20">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-6 bg-primary rounded-full" />
                     <h3 className="text-xl font-black text-slate-900 tracking-tight">Tutorial Visual</h3>
                   </div>
                   
-                  {/* UPDATE: Buka di YouTube (Title Case) */}
                   <a 
                     href={`https://www.youtube.com/watch?v=${currentContent.youtubeId}`}
                     target="_blank"
@@ -321,7 +338,7 @@ const ArticlePage = () => {
                   </a>
                 </div>
 
-                <div className="relative aspect-video w-full bg-slate-900 overflow-hidden shadow-2xl group">
+                <div className="relative aspect-video w-full bg-slate-900 overflow-hidden shadow-2xl group rounded-[1rem] md:rounded-[2rem]">
                    {!isPlaying ? (
                      <div className="absolute inset-0 w-full h-full cursor-pointer" onClick={() => setIsPlaying(true)}>
                         <img 
@@ -330,11 +347,12 @@ const ArticlePage = () => {
                           className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-700 grayscale-[0.5] group-hover:grayscale-0"
                         />
                         <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-all duration-700" />
-                        <div className="relative z-10 h-full w-full flex flex-col items-center justify-center">
-                           <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all duration-500">
-                              <PlayCircle size={40} className="text-white" />
+                        <div className="relative z-10 h-full w-full flex flex-col items-center justify-center p-4">
+                           <div className="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all duration-500">
+                              <PlayCircle size={36} className="text-white md:hidden" />
+                              <PlayCircle size={40} className="text-white hidden md:block" />
                            </div>
-                           <p className="text-white/80 text-[10px] font-black uppercase tracking-[0.3em] mt-6">Klik untuk Putar di Sini</p>
+                           <p className="text-white/80 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] mt-6 text-center">Klik untuk Putar di Sini</p>
                         </div>
                      </div>
                    ) : (
@@ -355,24 +373,23 @@ const ArticlePage = () => {
                     href={currentContent.pdfLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative flex items-center gap-4 px-6 py-3 bg-slate-900 text-white rounded-[1rem] overflow-hidden shadow-2xl transition-all duration-500 hover:bg-primary hover:shadow-primary/30 active:scale-95"
+                    className="group relative flex items-center gap-3 md:gap-4 px-5 md:px-6 py-3 bg-slate-900 text-white rounded-[1rem] overflow-hidden shadow-2xl transition-all duration-500 hover:bg-primary hover:shadow-primary/30 active:scale-95 w-full sm:w-auto justify-center"
                   >
-                    {/* Effect background hover */}
                     <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                     
-                    <div className="relative z-10 w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-all duration-500">
-                      <FileDown size={22} />
+                    <div className="relative z-10 w-9 h-9 md:w-10 md:h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-all duration-500shrink-0">
+                      <FileDown size={20} className="md:hidden" />
+                      <FileDown size={22} className="hidden md:block" />
                     </div>
                     
-                    <di className="relative z-10 text-left">
-                      {/* Teks di bawah sudah tidak kapital (Normal Case) */}
-                      <p className="text-[10px] font-bold text-white/40 group-hover:text-white/60 mb-0.5 transition-colors">
+                    <div className="relative z-10 text-left">
+                      <p className="text-[9px] md:text-[10px] font-bold text-white/40 group-hover:text-white/60 mb-0.5 transition-colors">
                         Offline Access
                       </p>
-                      <span className="text-[14px] font-black tracking-tight block">
+                      <span className="text-[13px] md:text-[14px] font-black tracking-tight block">
                         Download Modul
                       </span>
-                    </di>
+                    </div>
                     </a>
                   </div>
                 )}
@@ -380,29 +397,30 @@ const ArticlePage = () => {
             )}
 
             {/* Feedback */}
-            <div className="mt-24 pt-12 border-t border-slate-50 flex flex-col items-center gap-8 text-center min-h-[200px] justify-center">
+            <div className="mt-20 md:mt-24 pt-12 border-t border-slate-50 flex flex-col items-center gap-8 text-center min-h-[200px] justify-center">
               {!feedbackSubmitted ? (
                 <>
-                  <div>
-                    <p className="text-[11px] font-black text-slate-300 uppercase tracking-[0.3em] mb-2">Feedback Partner</p>
-                    <h4 className="text-lg font-bold text-slate-800">Apakah panduan ini membantu Anda?</h4>
+                  <div className="px-4">
+                    <p className="text-[10px] md:text-[11px] font-black text-slate-300 uppercase tracking-[0.3em] mb-2">Feedback Partner</p>
+                    <h4 className="text-base md:text-lg font-bold text-slate-800">Apakah panduan ini membantu Anda?</h4>
                   </div>
-                  <div className="flex gap-4">
-                    <button onClick={handleFeedback} className="flex items-center gap-3 px-10 py-4 rounded-2xl border border-slate-100 text-[14px] font-black text-slate-500 hover:bg-primary hover:text-white hover:border-primary hover:shadow-xl transition-all duration-500 active:scale-95">
+                  <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 sm:px-0">
+                    <button onClick={handleFeedback} className="w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 rounded-xl md:rounded-2xl border border-slate-100 text-[14px] font-black text-slate-500 hover:bg-primary hover:text-white hover:border-primary hover:shadow-xl transition-all duration-500 active:scale-95">
                       <ThumbsUp size={18} /> Ya
                     </button>
-                    <button className="flex items-center gap-3 px-10 py-4 rounded-2xl border border-slate-100 text-[14px] font-black text-slate-500 hover:bg-slate-50 transition-all duration-500">
+                    <button className="w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 rounded-xl md:rounded-2xl border border-slate-100 text-[14px] font-black text-slate-500 hover:bg-slate-50 transition-all duration-500">
                       <ThumbsDown size={18} /> Tidak
                     </button>
                   </div>
                 </>
               ) : (
-                <div className="animate-in fade-in zoom-in duration-700 flex flex-col items-center">
-                  <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6 text-green-500">
-                    <Heart size={32} fill="currentColor" className="animate-pulse" />
+                <div className="animate-in fade-in zoom-in duration-700 flex flex-col items-center px-6">
+                  <div className="w-16 h-16 md:w-20 md:h-20 bg-green-50 rounded-full flex items-center justify-center mb-6 text-green-500">
+                    <Heart size={28} fill="currentColor" className="animate-pulse md:hidden" />
+                    <Heart size={32} fill="currentColor" className="animate-pulse hidden md:block" />
                   </div>
-                  <h4 className="text-xl font-black text-slate-900 mb-2">Terima kasih atas masukan Anda! 😊</h4>
-                  <p className="text-sm font-bold text-slate-400">Kami akan terus meningkatkan kualitas layanan.</p>
+                  <h4 className="text-lg md:text-xl font-black text-slate-900 mb-2">Terima kasih atas masukan Anda! 😊</h4>
+                  <p className="text-xs md:text-sm font-bold text-slate-400">Kami akan terus meningkatkan kualitas layanan.</p>
                 </div>
               )}
             </div>
