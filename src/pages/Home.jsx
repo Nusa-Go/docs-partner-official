@@ -87,9 +87,6 @@ const Home = () => {
           className="absolute inset-0 z-0 bg-[#D21F1F]"
           style={{ clipPath: 'ellipse(140% 100% at 50% 0%)' }}
         >
-          {/* Sharp Depth - Single clean layered circle */}
-          <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-white/5 rounded-full border border-white/10 pointer-events-none" />
-
           {/* Professional Texture */}
           <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
         </div>
@@ -243,44 +240,42 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- 2. KATEGORI BANTUAN SECTION (SHARP 3D THEME) --- */}
+      {/* --- 2. KATEGORI BANTUAN SECTION (FULL-WIDTH SHARP 3D WAVE) --- */}
       <section className="relative py-32 md:py-48 overflow-hidden bg-white">
 
-        {/* SHARP 3D BACKGROUND - RED AREA */}
-        <div className="absolute inset-x-4 md:inset-x-8 inset-y-8 z-0">
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1440 600" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* SHARP 3D WAVE - FULL WIDTH */}
+        <div className="absolute inset-0 z-0">
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1440 800" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="sharpRed" x1="0%" y1="0%" x2="0%" y2="100%">
+              <linearGradient id="coolRed" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#FF4D4D" />
                 <stop offset="100%" stopColor="#D21F1F" />
               </linearGradient>
             </defs>
 
-            {/* Sharp Depth Layer (Shadow) */}
+            {/* Depth Shadow Layer */}
             <path
-              d="M720,40 C1100,40 1420,140 1420,320 C1420,500 1100,600 720,600 C340,600 20,500 20,320 C20,140 340,40 720,40 Z"
+              d="M0 150C300 50 600 250 900 150C1200 50 1440 150 1440 150V750C1140 650 840 850 540 750C240 650 0 750 0 750V150Z"
               fill="#991B1B"
+              transform="translate(0, 20)"
             />
 
-            {/* Main Sharp Body */}
+            {/* Main Sharp Wave Body */}
             <path
-              d="M720,20 C1100,20 1420,120 1420,300 C1420,480 1100,580 720,580 C340,580 20,480 20,300 C20,120 340,20 720,20 Z"
-              fill="url(#sharpRed)"
+              d="M0 150C300 50 600 250 900 150C1200 50 1440 150 1440 150V750C1140 650 840 850 540 750C240 650 0 750 0 750V150Z"
+              fill="url(#coolRed)"
               stroke="white"
               strokeOpacity="0.1"
               strokeWidth="2"
             />
           </svg>
 
-          {/* Sharp 3D Floating Accents */}
-          <div className="absolute top-[5%] left-[12%] w-16 h-16 bg-white/10 rounded-full border border-white/20 flex items-center justify-center animate-bounce shadow-2xl" style={{ animationDuration: '6s' }}>
+          {/* Sharp Floating Accents */}
+          <div className="absolute top-[15%] left-[5%] w-16 h-16 bg-white/10 rounded-full border border-white/20 flex items-center justify-center animate-bounce shadow-2xl">
             <MapPin size={24} className="text-white" />
           </div>
-          <div className="absolute bottom-[5%] right-[15%] w-24 h-24 bg-white/5 rounded-[2.5rem] border border-white/10 flex items-center justify-center -rotate-12 animate-pulse shadow-2xl">
-            <Building2 size={36} className="text-white/30" />
-          </div>
-          <div className="absolute top-1/2 left-[2%] w-14 h-14 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center rotate-12 shadow-xl">
-            <Car size={28} className="text-white/20" />
+          <div className="absolute bottom-[10%] right-[5%] w-24 h-24 bg-white/5 rounded-[2.5rem] border border-white/10 flex items-center justify-center -rotate-12 animate-pulse shadow-2xl">
+            <Building2 size={36} className="text-white/60" />
           </div>
         </div>
 
@@ -320,10 +315,11 @@ const Home = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                {/* Icon Circle */}
-                <div className="relative w-16 h-16 mb-6 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-primary/5 rounded-2xl rotate-6 group-hover:rotate-12 transition-all duration-500" />
-                  <div className="relative z-10 text-primary">
+                {/* Icon Circle - Enhanced Visibility */}
+                <div className="relative w-20 h-20 mb-8 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <div className="absolute inset-0 bg-primary/10 rounded-3xl rotate-6 group-hover:rotate-12 transition-all duration-500" />
+                  <div className="absolute inset-0 bg-slate-900/5 rounded-3xl -rotate-6 group-hover:-rotate-12 transition-all duration-500" />
+                  <div className="relative z-10 w-16 h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 border border-slate-100">
                     {item.icon}
                   </div>
                 </div>
